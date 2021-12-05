@@ -1,7 +1,7 @@
 const processMessage = async (kafkaMessage) => {
 
 	//Start working here
-	console.log(kafkaMessage);
+	// console.log(kafkaMessage);
 
 };
 
