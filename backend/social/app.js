@@ -1,6 +1,6 @@
 const express = require('express');
 // const { initConsumer } = require('./utilities/consumer');
-// const { initProducer } = require('./utilities/producer');
+const { initProducer } = require('./utilities/producer');
 // const { connectConsumer } = require('./utilities/consumer');
 // const { connectProducer, connectAdmin } = require('./utilities/producer');
 // const KeyMaster = require('./utilities/KeyMaster');
@@ -25,6 +25,6 @@ app.use('/', async (req, res) => {
 app.listen(process.env.PORT || 4000, async () => {
 	
 	console.log('App started at port', process.env.PORT || 4000);
-	// await initProducer();
+	await initProducer();
 
 });

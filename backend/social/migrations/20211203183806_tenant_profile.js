@@ -1,6 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.createTable("TenantProfile", function (table) {
-    table.increments("tenant_id")
+    table.integer("tenant_id").notNullable().primary()
     table.string("tenant_name").notNullable()
     table.json("address")
     table.string("city")

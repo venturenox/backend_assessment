@@ -10,7 +10,7 @@ router.post("/create", async (req, res, next) => {
 
     return response.statusCode === 200
       ? res.status(response.statusCode).json({
-          message: "User created successfully!",
+          message: "Record created successfully!",
           tenantProfile: response.data,
         })
       : res.status(response.statusCode).json({
