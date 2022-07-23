@@ -2,8 +2,8 @@
 
 set -e
 
-# echo "Running database migrations"
-# yarn migrate
+echo "Running database migrations"
+yarn migrate
 
 # echo "Seeding database"
 # yarn seed

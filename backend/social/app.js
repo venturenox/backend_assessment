@@ -1,22 +1,31 @@
+require('dotenv').config('');
 const express = require('express');
+const { noAuthRoutes } = require('./routes/routes');
 // const { initConsumer } = require('./utilities/consumer');
 const { initProducer } = require('./utilities/producer');
+const {Model} = require('objection');
 // const { connectConsumer } = require('./utilities/consumer');
 // const { connectProducer, connectAdmin } = require('./utilities/producer');
 // const KeyMaster = require('./utilities/KeyMaster');
-// const databaseConfig = require('./database/DatabaseConfig');
+const { knexConnection } = require('./database/databaseConfig');
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.use(databaseConfig.initializeDB());
+Model.knex(knexConnection['dev']);
 
-app.use('/', async (req, res) => {
 
-	res.status(200).json({ message: `App is running on port. ${process.env.PORT || 4000}` });
+noAuthRoutes.forEach((route) => {
+	app.use(`${route.path}`, route.action);
+});
 
+app.use((error, req, res, next ) => {
+	const status = error.status || 500;
+	const message = error.message || 'internal server error';
+	res.status(status).send(message);
+	next();
 });
 
 app.listen(process.env.PORT || 4000, async () => {

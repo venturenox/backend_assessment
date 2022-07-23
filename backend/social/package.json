@@ -5,15 +5,17 @@
 	"main": "app.js",
 	"scripts": {
 		"start": "node app.js",
-		"migrate": "knex migrate:latest",
+		"migrate": "knex --knexfile=./database/knexfile.js migrate:latest",
 		"makemigrate": "knex --knexfile=./database/knexfile.js migrate:make",
 		"makeseed": "knex --knexfile=./database/knexfile.js seed:make",
 		"seed": "knex seed:run",
-		"lint": "eslint '**/*.js'"
+		"lint": "eslint '**/*.js'",
+		"migratedown": "knex --knexfile=./database/knexfile.js migrate:down"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"dotenv": "^16.0.1",
 		"express": "^4.17.1",
 		"faker": "^5.5.3",
 		"jsonwebtoken": "^8.5.1",
@@ -21,9 +23,11 @@
 		"knex": "^0.95.6",
 		"node-rdkafka": "^2.12.0",
 		"objection": "^2.2.15",
-		"pg": "^8.6.0"
+		"pg": "^8.6.0",
+		"zod": "^3.17.10"
 	},
 	"devDependencies": {
+		"babel-eslint": "^10.1.0",
 		"eslint": "^7.18.0",
 		"husky": "^4.3.8"
 	},
