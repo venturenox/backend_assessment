@@ -13,7 +13,7 @@ const UserSchema = z.object({
 	bio: z.string(),
 	socialLinks: z.any(),
 	employeeId: z.string()
-});
+}).strict();
 
 const UserPatchSchema = z.object({
 	firstName: z.string().optional(),
@@ -27,7 +27,7 @@ const UserPatchSchema = z.object({
 	bio: z.string().optional(),
 	socialLinks: z.any().optional(),
 	employeeId: z.string().optional()
-});
+}).strict();
 
 module.exports = {
 	UserSchema,

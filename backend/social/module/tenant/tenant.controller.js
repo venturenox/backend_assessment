@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const { TenantSchema, TenantPatchSchema } = require('./tenant.schema');
 const { TenantService } = require('./tenant.service');
+const { verifyTenantSchemaMiddleware, verifyTenantPatchSchemaMiddleware } = require('./tenant.middleware');
 
 class TenantController {
 	constructor() {
@@ -10,20 +10,13 @@ class TenantController {
 	}
 
   addTenant = async (req, res) => {
-  	if (TenantSchema.safeParse(req.body)){
-  		try{
-  			const tenant = await this.tenantService.addTenant(req.body);
-  			res.status(200).send(tenant);
-  		}catch(error){
-  			res.status(500).send(error.message);
-  		}
-  	}else{
-  		res.status(400).send({
-  			error: true,
-  			message: 'field not set properly'
-  		});
+  	try{
+  		const tenant = await this.tenantService.addTenant(req.body);
+  		res.status(200).send(tenant);
+  	}catch(error){
+  		res.status(500).send(error.message);
   	}
-  }
+  };
 
   getAllTenants = async (req, res) => {
   	try {
@@ -87,30 +80,23 @@ class TenantController {
 
   updateTenant = async (req, res) => {
   	const { id } = req.params;
-  	if (TenantPatchSchema.safeParse(req.body)){
-  		try{
-  			const tenant = await this.tenantService.updateTenant(id, req.body);
-  			res.status(200).send(tenant);
-  		}catch(error){
-  			res.status(500).send({
-  				error: true,
-  				message: error.message
-  			});
-  		}
-  	}else{
-  		res.status(400).send({
+  	try{
+  		const tenant = await this.tenantService.updateTenant(Number(id), req.body);
+  		res.status(200).send(tenant);
+  	}catch(error){
+  		res.status(500).send({
   			error: true,
-  			message: 'field not set properly'
+  			message: error.message
   		});
   	}
   }
 
   routes() {
-  	this.router.post('/', this.addTenant);
+  	this.router.post('/', verifyTenantSchemaMiddleware ,this.addTenant);
   	this.router.get('/', this.getAllTenants);
   	this.router.get('/:id', this.getTenant);
   	this.router.delete('/:id', this.removeTenant);
-  	this.router.patch('/:id', this.updateTenant);
+  	this.router.patch('/:id', verifyTenantPatchSchemaMiddleware ,this.updateTenant);
   	return this.router;
   }
 }

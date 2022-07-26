@@ -10,7 +10,7 @@ const TenantSchema = z.object({
 	zipCode: z.string(),
 	phone: z.string(),
 	webUrl: z.string()
-});
+}).strict();
 
 const TenantPatchSchema = z.object({
 	tenantName: z.string().optional(),
@@ -21,7 +21,7 @@ const TenantPatchSchema = z.object({
 	zipCode: z.string().optional(),
 	phone: z.string().optional(),
 	webUrl: z.string().optional(),
-});
+}).strict();
 
 module.exports = {
 	TenantSchema,
