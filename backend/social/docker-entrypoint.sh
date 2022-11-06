@@ -3,7 +3,7 @@
 set -e
 
 # echo "Running database migrations"
-# yarn migrate
+yarn migrate
 
 # echo "Seeding database"
 # yarn seed
