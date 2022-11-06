@@ -27,7 +27,7 @@ services:
   social:
     build: backend/social/
     container_name: social
-    command: sh ./docker-entrypoint.sh
+    command: bash ./docker-entrypoint.sh
     restart: always
     ports:
       - $SOCIAL_PORT:$SOCIAL_PORT
